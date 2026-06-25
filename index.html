@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Schibsted+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; }
+  ::selection { background: var(--accent, #FF5436); color: #0E0E10; }
+  @keyframes fadeUp { from { transform: translateY(26px); } to { transform: translateY(0); } }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  @keyframes glow { 0%,100% { opacity: .5; } 50% { opacity: .85; } }
+  @keyframes blink { 0%,49% { opacity: 1; } 50%,100% { opacity: 0; } }
+
+  /* ---------- Tablet ---------- */
+  @media (max-width: 900px) {
+    .r-feat { grid-template-columns: 1fr !important; }
+    .r-featmedia { min-height: 300px !important; border-left: none !important; border-top: 1px solid rgba(236,232,223,0.08) !important; }
+    .r-featpad { padding: 36px 32px !important; }
+    .r-tlrow { grid-template-columns: 1fr !important; gap: 16px !important; }
+    .r-sec { padding-left: 6vw !important; padding-right: 6vw !important; }
+    .r-secpad { padding-top: 88px !important; padding-bottom: 88px !important; }
+  }
+
+  /* ---------- Mobile ---------- */
+  @media (max-width: 640px) {
+    .r-navpage { display: none !important; }
+    .r-nav { padding: 14px 5vw !important; }
+    .r-brand { font-size: 16px !important; }
+    .r-hero { padding: 124px 6vw 64px !important; }
+    .r-hero-glow { width: 320px !important; height: 320px !important; top: 60px !important; right: -20vw !important; }
+    .r-eyebrow { font-size: 11.5px !important; }
+    .r-hero p { font-size: 16px !important; }
+    .r-stats { gap: 26px 32px !important; margin-top: 56px !important; padding-top: 32px !important; }
+    .r-stat-num { font-size: 30px !important; }
+    .r-stat-disc { font-size: 22px !important; }
+    .r-sec { padding-left: 5vw !important; padding-right: 5vw !important; }
+    .r-secpad { padding-top: 72px !important; padding-bottom: 72px !important; }
+    .r-featpad { padding: 30px 24px !important; }
+    .r-feat-blurb { font-size: 15.5px !important; }
+    .r-featmedia { min-height: 220px !important; }
+    .r-grid { grid-template-columns: 1fr !important; gap: 18px !important; }
+    .r-stackgrid { grid-template-columns: 1fr !important; }
+    .r-cta { width: 100% !important; justify-content: center !important; }
+    .r-contactbtns { flex-direction: column !important; align-items: stretch !important; }
+    .r-contactbtns a { justify-content: center !important; }
+    .r-foot { flex-direction: column !important; align-items: flex-start !important; gap: 14px !important; }
+  }
+</style>
+</helmet>
+<div ref="{{ rootRef }}" style="--accent:#FF5436; background:#0E0E10; color:#ECE8DF; font-family:'Schibsted Grotesk',sans-serif; -webkit-font-smoothing:antialiased; overflow-x:hidden; position:relative; min-height:100vh;">
+
+  <sc-if value="{{ showGrain }}" hint-placeholder-val="{{ true }}">
+    <div aria-hidden="true" style="position:fixed; inset:0; z-index:2; pointer-events:none; opacity:.05; mix-blend-mode:overlay; background-image:url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22200%22><filter id=%22n%22><feTurbulence type=%22fractalNoise%22 baseFrequency=%220.85%22 numOctaves=%222%22/></filter><rect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23n)%22/></svg>');"></div>
+  </sc-if>
+
+  <!-- NAV -->
+  <nav class="r-nav" style="position:fixed; top:0; left:0; right:0; z-index:50; display:flex; align-items:center; justify-content:space-between; padding:18px 7vw; backdrop-filter:blur(14px); background:rgba(14,14,16,0.55); border-bottom:1px solid rgba(236,232,223,0.08);">
+    <a href="#top" style="display:flex; align-items:baseline; gap:10px; text-decoration:none; color:#ECE8DF;">
+      <span class="r-brand" style="font-family:'Bricolage Grotesque',sans-serif; font-weight:800; font-size:18px; letter-spacing:-0.02em;">Mridul Sehgal</span>
+      <span style="width:8px; height:8px; border-radius:50%; background:var(--accent); display:inline-block; animation:glow 2.4s ease-in-out infinite;"></span>
+    </a>
+    <div style="display:flex; align-items:center; gap:30px; font-family:'JetBrains Mono',monospace; font-size:12.5px; letter-spacing:0.02em;">
+      <a href="#work" class="r-navpage" style="color:#8B8780; text-decoration:none;" style-hover="color:#ECE8DF;">Work</a>
+      <a href="#stack" class="r-navpage" style="color:#8B8780; text-decoration:none;" style-hover="color:#ECE8DF;">Stack</a>
+      <a href="#path" class="r-navpage" style="color:#8B8780; text-decoration:none;" style-hover="color:#ECE8DF;">Path</a>
+      <a href="#contact" style="display:inline-flex; align-items:center; gap:7px; color:#0E0E10; background:var(--accent); padding:8px 15px; border-radius:100px; text-decoration:none; font-weight:500;">Get in touch</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header id="top" data-screen-label="Hero" class="r-hero" style="position:relative; padding:172px 7vw 90px; max-width:1320px; margin:0 auto;">
+    <div aria-hidden="true" class="r-hero-glow" style="position:absolute; top:80px; right:-6vw; width:540px; height:540px; border-radius:50%; background:radial-gradient(circle at center, color-mix(in srgb, var(--accent) 38%, transparent), transparent 64%); filter:blur(40px); opacity:.55; pointer-events:none; animation:glow 6s ease-in-out infinite;"></div>
+    <div class="r-eyebrow" style="display:flex; align-items:center; gap:16px; font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--accent); letter-spacing:0.06em; margin-bottom:30px; animation:fadeUp .8s cubic-bezier(.2,.7,.2,1) both;">
+      <span style="width:34px; height:1px; background:var(--accent);"></span>
+      SOFTWARE ENGINEER · SURAT, INDIA
+    </div>
+    <h1 style="font-family:'Bricolage Grotesque',sans-serif; font-weight:800; font-size:clamp(48px,8.4vw,118px); line-height:0.95; letter-spacing:-0.03em; margin:0; max-width:15ch; animation:fadeUp .9s cubic-bezier(.2,.7,.2,1) both; animation-delay:.06s;">
+      I build full-stack products, mobile apps &amp; <span style="color:var(--accent);">AI-powered</span> tools.
+    </h1>
+    <p style="font-size:clamp(17px,1.5vw,21px); line-height:1.55; color:#A8A39A; max-width:60ch; margin:36px 0 0; animation:fadeUp .9s cubic-bezier(.2,.7,.2,1) both; animation-delay:.16s;">
+      Full-stack engineer shipping scalable web applications, cross-platform apps, and AI-driven features — from RBAC microservice APIs and reusable component libraries to live 3D commerce and accessibility-first products.
+    </p>
+    <div style="display:flex; flex-wrap:wrap; gap:14px; margin-top:46px; animation:fadeUp .9s cubic-bezier(.2,.7,.2,1) both; animation-delay:.26s;">
+      <a href="#work" class="r-cta" style="display:inline-flex; align-items:center; gap:10px; background:var(--accent); color:#0E0E10; font-weight:600; font-size:15px; padding:15px 26px; border-radius:100px; text-decoration:none;">View selected work
+        <span style="font-family:'JetBrains Mono',monospace;">↓</span>
+      </a>
+      <a href="#contact" style="display:inline-flex; align-items:center; gap:10px; border:1px solid rgba(236,232,223,0.18); color:#ECE8DF; font-size:15px; padding:15px 26px; border-radius:100px; text-decoration:none;" style-hover="border-color:#ECE8DF;">Let's talk</a>
+    </div>
+    <div class="r-stats" style="display:flex; flex-wrap:wrap; gap:48px; margin-top:84px; padding-top:40px; border-top:1px solid rgba(236,232,223,0.10); animation:fadeUp 1s cubic-bezier(.2,.7,.2,1) both; animation-delay:.4s;">
+      <div>
+        <div class="r-stat-num" style="font-family:'Bricolage Grotesque',sans-serif; font-weight:700; font-size:40px; letter-spacing:-0.02em;">8+</div>
+        <div style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#8B8780; margin-top:4px;">PRODUCTS SHIPPED</div>
+      </div>
+      <div>
+        <div class="r-stat-num" style="font-family:'Bricolage Grotesque',sans-serif; font-weight:700; font-size:40px; letter-spacing:-0.02em;">2+</div>
+        <div style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#8B8780; margin-top:4px;">YEARS BUILDING</div>
+      </div>
+      <div>
+        <div class="r-stat-disc" style="font-family:'Bricolage Grotesque',sans-serif; font-weight:700; font-size:40px; letter-spacing:-0.02em;">Web · Mobile · AI</div>
+        <div style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#8B8780; margin-top:4px;">DISCIPLINES</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MARQUEE -->
+  <sc-if value="{{ showMarquee }}" hint-placeholder-val="{{ true }}">
+    <div style="overflow:hidden; border-top:1px solid rgba(236,232,223,0.10); border-bottom:1px solid rgba(236,232,223,0.10); padding:18px 0; background:#101013;">
+      <div style="display:flex; width:max-content; animation:marquee 38s linear infinite;">
+        <sc-for list="{{ marqueeLoop }}" as="m" hint-placeholder-count="12">
+          <span style="display:inline-flex; align-items:center; gap:34px; font-family:'JetBrains Mono',monospace; font-size:15px; color:#7E7A72; padding:0 17px;">
+            {{ m }}<span style="color:var(--accent); font-size:9px;">◆</span>
+          </span>
+        </sc-for>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- WORK -->
+  <section id="work" data-screen-label="Selected Work" class="r-sec r-secpad" style="padding:120px 7vw; max-width:1320px; margin:0 auto;">
+    <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:24px; flex-wrap:wrap; margin-bottom:56px;">
+      <div>
+        <div style="font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--accent); letter-spacing:0.06em; margin-bottom:16px;">01 / SELECTED WORK</div>
+        <h2 style="font-family:'Bricolage Grotesque',sans-serif; font-weight:700; font-size:clamp(34px,5vw,62px); line-height:1; letter-spacing:-0.03em; margin:0;">Products I've helped ship</h2>
+      </div>
+      <p style="font-family:'JetBrains Mono',monospace; font-size:12.5px; color:#8B8780; max-width:30ch; line-height:1.7; margin:0;">Live commercial platforms across commerce, fintech, healthcare and AI.</p>
+    </div>
+
+    <!-- Featured -->
+    <a href="{{ featured.url }}" target="_blank" rel="noopener" style="display:block; text-decoration:none; color:inherit; border:1px solid rgba(236,232,223,0.10); border-radius:18px; overflow:hidden; background:#121216; margin-bottom:26px;" style-hover="border-color:color-mix(in srgb, var(--accent) 50%, transparent);">
+      <div class="r-feat" style="display:grid; grid-template-columns:1.05fr 1fr; min-height:440px;">
+        <div class="r-featpad" style="padding:46px 46px 40px; display:flex; flex-direction:column; justify-content:space-between; gap:32px;">
+          <div>
+            <div style="display:flex; align-items:center; gap:14px; margin-bottom:26px;">
+              <span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#0E0E10; background:var(--accent); padding:5px 11px; border-radius:100px; font-weight:500;">FEATURED</span>
+              <span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#8B8780;">{{ featured.type }}</span>
+            </div>
+            <h3 style="font-family:'Bricolage Grotesque',sans-serif; font-weight:700; font-size:clamp(32px,3.4vw,48px); letter-spacing:-0.02em; margin:0 0 18px;">{{ featured.name }}</h3>
+            <p class="r-feat-blurb" style="font-size:17px; line-height:1.6; color:#B4AFA6; margin:0; max-width:42ch;">{{ featured.blurb }}</p>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:20px;">
+            <div style="display:flex; flex-wrap:wrap; gap:8px;">
+              <sc-for list="{{ featured.stack }}" as="t" hint-placeholder-count="4">
+                <span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#A8A39A; border:1px solid rgba(236,232,223,0.14); padding:6px 12px; border-radius:7px;">{{ t }}</span>
+              </sc-for>
+            </div>
+            <span style="display:inline-flex; align-items:center; gap:9px; font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--accent);">{{ featured.host }} <span style="font-size:15px;">↗</span></span>
+          </div>
+        </div>
+        <div class="r-featmedia" style="position:relative; overflow:hidden; background:linear-gradient(135deg,#1c1c22,#0f0f12); border-left:1px solid rgba(236,232,223,0.08);">
+          <span style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-family:'JetBrains Mono',monospace; font-size:13px; color:#4a4843;">{{ featured.host }}</span>
+          <img src="{{ featured.shot }}" alt="{{ featured.name }} screenshot" loading="lazy" onError="{{ onImgError }}" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:top center;">
+        </div>
+      </div>
+    </a>
+
+    <!-- Grid -->
+    <div class="r-grid" style="display:grid; grid-template-columns:repeat(auto-fill,minmax(340px,1fr)); gap:26px;">
+      <sc-for list="{{ others }}" as="p" hint-placeholder-count="6">
+        <a href="{{ p.url }}" target="_blank" rel="noopener" style="display:flex; flex-direction:column; text-decoration:none; color:inherit; border:1px solid rgba(236,232,223,0.10); border-radius:16px; overflow:hidden; background:#121216;" style-hover="border-color:color-mix(in srgb, var(--accent) 50%, transparent);">
+          <div style="position:relative; aspect-ratio:16/10; overflow:hidden; background:linear-gradient(135deg,#1c1c22,#0f0f12);">
+            <span style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-family:'JetBrains Mono',monospace; font-size:12px; color:#4a4843;">{{ p.host }}</span>
+            <img src="{{ p.shot }}" alt="{{ p.name }} screenshot" loading="lazy" onError="{{ onImgError }}" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:top center;">
+            <span style="position:absolute; top:14px; left:14px; font-family:'JetBrains Mono',monospace; font-size:11px; color:#ECE8DF; background:rgba(14,14,16,0.7); backdrop-filter:blur(6px); padding:4px 9px; border-radius:6px;">{{ p.index }}</span>
+          </div>
+          <div style="padding:24px 24px 26px; display:flex; flex-direction:column; gap:14px; flex:1;">
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
+              <h3 style="font-family:'Bricolage Grotesque',sans-serif; font-weight:700; font-size:23px; letter-spacing:-0.02em; margin:0;">{{ p.name }}</h3>
+              <span style="font-family:'JetBrains Mono',monospace; font-size:15px; color:var(--accent);">↗</span>
+            </div>
+            <div style="font-family:'JetBrains Mono',monospace; font-size:11.5px; color:var(--accent); letter-spacing:0.03em;">{{ p.type }}</div>
+            <p style="font-size:14.5px; line-height:1.6; color:#9C978E; margin:0; flex:1;">{{ p.blurb }}</p>
+            <div style="display:flex; flex-wrap:wrap; gap:7px; margin-top:4px;">
+              <sc-for list="{{ p.stack }}" as="t" hint-placeholder-count="3">
+                <span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#8B8780; border:1px solid rgba(236,232,223,0.12); padding:4px 9px; border-radius:6px;">{{ t }}</span>
+              </sc-for>
+            </div>
+          </div>
+        </a>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- STACK -->
+  <section id="stack" data-screen-label="Capabilities" class="r-sec r-secpad" style="padding:110px 7vw; max-width:1320px; margin:0 auto; border-top:1px solid rgba(236,232,223,0.10);">
+    <div style="font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--accent); letter-spacing:0.06em; margin-bottom:16px;">02 / CAPABILITIES</div>
+    <h2 style="font-family:'Bricolage Grotesque',sans-serif; font-weight:700; font-size:clamp(34px,5vw,62px); line-height:1; letter-spacing:-0.03em; margin:0 0 60px; max-width:18ch;">The toolkit I build with</h2>
+    <div class="r-stackgrid" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:1px; background:rgba(236,232,223,0.10); border:1px solid rgba(236,232,223,0.10); border-radius:16px; overflow:hidden;">
+      <sc-for list="{{ skills }}" as="g" hint-placeholder-count="5">
+        <div style="background:#121216; padding:30px 26px; display:flex; flex-direction:column; gap:18px;">
+          <div style="font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--accent); letter-spacing:0.04em;">{{ g.label }}</div>
+          <div style="display:flex; flex-direction:column; gap:11px;">
+            <sc-for list="{{ g.items }}" as="it" hint-placeholder-count="5">
+              <div style="font-size:15.5px; color:#CFC9BF; display:flex; align-items:center; gap:10px;">
+                <span style="width:5px; height:5px; border-radius:50%; background:color-mix(in srgb, var(--accent) 70%, transparent); flex-shrink:0;"></span>{{ it }}
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- PATH: experience + education -->
+  <section id="path" data-screen-label="Experience & Education" class="r-sec r-secpad" style="padding:110px 7vw; max-width:1320px; margin:0 auto; border-top:1px solid rgba(236,232,223,0.10);">
+    <div style="font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--accent); letter-spacing:0.06em; margin-bottom:16px;">03 / THE PATH</div>
+    <h2 style="font-family:'Bricolage Grotesque',sans-serif; font-weight:700; font-size:clamp(34px,5vw,62px); line-height:1; letter-spacing:-0.03em; margin:0 0 60px;">Where I've worked &amp; studied</h2>
+    <div style="display:flex; flex-direction:column;">
+      <sc-for list="{{ timeline }}" as="e" hint-placeholder-count="3">
+        <div class="r-tlrow" style="display:grid; grid-template-columns:200px 1fr; gap:40px; padding:38px 0; border-top:1px solid rgba(236,232,223,0.10);">
+          <div>
+            <div style="font-family:'JetBrains Mono',monospace; font-size:12.5px; color:var(--accent);">{{ e.dates }}</div>
+            <div style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#8B8780; margin-top:6px;">{{ e.place }}</div>
+          </div>
+          <div>
+            <div style="display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; margin-bottom:8px;">
+              <h3 style="font-family:'Bricolage Grotesque',sans-serif; font-weight:700; font-size:25px; letter-spacing:-0.02em; margin:0;">{{ e.role }}</h3>
+              <span style="font-size:16px; color:#8B8780;">{{ e.org }}</span>
+            </div>
+            <ul style="margin:14px 0 0; padding:0; list-style:none; display:flex; flex-direction:column; gap:11px;">
+              <sc-for list="{{ e.points }}" as="pt" hint-placeholder-count="3">
+                <li style="font-size:15.5px; line-height:1.6; color:#A8A39A; display:flex; gap:12px;">
+                  <span style="color:var(--accent); font-family:'JetBrains Mono',monospace; flex-shrink:0;">→</span>{{ pt }}
+                </li>
+              </sc-for>
+            </ul>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" data-screen-label="Contact" class="r-sec" style="position:relative; padding:130px 7vw 70px; max-width:1320px; margin:0 auto; border-top:1px solid rgba(236,232,223,0.10);">
+    <div aria-hidden="true" style="position:absolute; bottom:0; left:50%; transform:translateX(-50%); width:680px; height:340px; background:radial-gradient(ellipse at center bottom, color-mix(in srgb, var(--accent) 30%, transparent), transparent 70%); filter:blur(40px); opacity:.4; pointer-events:none;"></div>
+    <div style="position:relative;">
+      <div style="font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--accent); letter-spacing:0.06em; margin-bottom:24px;">04 / CONTACT</div>
+      <h2 style="font-family:'Bricolage Grotesque',sans-serif; font-weight:800; font-size:clamp(44px,7.5vw,108px); line-height:0.95; letter-spacing:-0.03em; margin:0; max-width:14ch;">Let's build something<span style="color:var(--accent);">.</span></h2>
+      <p style="font-size:18px; line-height:1.6; color:#A8A39A; max-width:54ch; margin:30px 0 50px;">Open to full-stack, frontend, mobile and AI engineering roles. The fastest way to reach me is email — I usually reply within a day.</p>
+      <div class="r-contactbtns" style="display:flex; flex-wrap:wrap; gap:14px;">
+        <a href="mailto:mridul.sehgalwork@gmail.com" style="display:inline-flex; align-items:center; gap:10px; background:var(--accent); color:#0E0E10; font-weight:600; font-size:15px; padding:15px 26px; border-radius:100px; text-decoration:none;">mridul.sehgalwork@gmail.com</a>
+        <a href="tel:+918347758913" style="display:inline-flex; align-items:center; gap:10px; border:1px solid rgba(236,232,223,0.18); color:#ECE8DF; font-size:15px; padding:15px 26px; border-radius:100px; text-decoration:none;" style-hover="border-color:#ECE8DF;">+91 83477 58913</a>
+      </div>
+      <div style="display:flex; flex-wrap:wrap; gap:28px; margin-top:64px; padding-top:34px; border-top:1px solid rgba(236,232,223,0.10); font-family:'JetBrains Mono',monospace; font-size:13px;">
+        <a href="https://www.linkedin.com/in/mridul-sehgal-616673193" target="_blank" rel="noopener" style="color:#8B8780; text-decoration:none;" style-hover="color:var(--accent);">LinkedIn ↗</a>
+        <a href="https://github.com/MS-Pro-2001" target="_blank" rel="noopener" style="color:#8B8780; text-decoration:none;" style-hover="color:var(--accent);">GitHub ↗</a>
+        <a href="https://leetcode.com/" target="_blank" rel="noopener" style="color:#8B8780; text-decoration:none;" style-hover="color:var(--accent);">LeetCode ↗</a>
+      </div>
+      <div class="r-foot" style="display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap; margin-top:54px; font-family:'JetBrains Mono',monospace; font-size:11.5px; color:#5d5a54;">
+        <span>© {{ year }} Mridul Sehgal — M.Sc. Mathematics, NIT Surat</span>
+        <span style="display:inline-flex; align-items:center; gap:7px;">Available for work <span style="width:7px; height:7px; border-radius:50%; background:#5ad17a; animation:blink 1.6s step-end infinite;"></span></span>
+      </div>
+    </div>
+  </section>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900},&quot;accent&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Coral&quot;,&quot;Lime&quot;,&quot;Azure&quot;],&quot;default&quot;:&quot;Coral&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;showTechMarquee&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;grain&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
+class Component extends DCLogic {
+  rootRef = React.createRef();
+
+  applyAccent() {
+    const map = { Coral: '#FF5436', Lime: '#C2F250', Azure: '#4D8DFF' };
+    const a = map[this.props.accent] || '#FF5436';
+    const el = this.rootRef.current;
+    if (el) el.style.setProperty('--accent', a);
+  }
+  componentDidMount() { this.applyAccent(); }
+  componentDidUpdate() { this.applyAccent(); }
+
+  shot(url) {
+    return 'https://image.thum.io/get/width/1280/crop/900/noanimate/' + url;
+  }
+
+  renderVals() {
+    const P = (index, name, host, url, type, blurb, stack) => ({
+      index, name, host, url, type, blurb, stack, shot: this.shot(url)
+    });
+
+    const projects = [
+      P('01', 'Narad', 'narad.io', 'https://narad.io/', 'AI · Full-stack',
+        'AI platform that answers security questionnaires, vendor risk assessments and RFPs in minutes with reference-backed answers. I built the admin dashboard, role-based-access microservice APIs (cutting unauthorized access ~90%) and a reusable React component library at 95% design fidelity.',
+        ['React', 'Redux Toolkit', 'Node.js', 'REST', 'RBAC']),
+      P('02', 'Paid', 'paid.com', 'https://paid.com/', 'Fintech · Platform',
+        'All-in-one commerce platform unifying online payments, invoicing and multi-courier shipping. Contributed platform and dashboard features across a large Next.js / Node service codebase.',
+        ['Next.js', 'Node.js', 'Nest.js', 'PostgreSQL']),
+      P('03', 'Baru Cabinets', 'shop.barucabinets.com', 'https://shop.barucabinets.com/', 'E-commerce · 3D',
+        'Configurable cabinet storefront with an end-to-end 3D model viewer for admins and customers — lifting engagement ~50%. Led QA and managed deployment cycles, cutting post-release issues ~60%.',
+        ['React', 'Fastify', 'Node.js', 'PostgreSQL']),
+      P('04', 'Coables', 'coables.com', 'https://coables.com/', 'Healthcare · A11y',
+        'Inclusive online therapy platform for children, built accessibility-first: screen-reader support, full keyboard navigation, WCAG-compliant contrast and multi-language i18n.',
+        ['Next.js', 'MongoDB', 'i18n']),
+      P('05', 'Bombay Shirt Co.', 'bombayshirts.com', 'https://staging.bombayshirts.com/', 'E-commerce',
+        'Made-to-measure shirt storefront where customers design garments fabric-by-fabric. Built storefront UI and product-configuration flows with tested, reliable components.',
+        ['Next.js', 'Node.js', 'MongoDB']),
+      P('06', 'Freshpik', 'freshpikonline.com', 'https://freshpikonline.com/', 'Marketplace · Mobile',
+        'On-demand fresh produce and grocery delivery experience spanning web and mobile — catalog, cart, and order tracking on a MERN stack with a React Native companion app.',
+        ['MERN', 'React Native', 'Express']),
+      P('07', 'Braoza', 'braoza.com', 'https://www.staging.braoza.com/', 'E-commerce',
+        'Direct-to-consumer brand storefront with catalog, cart and checkout flows, built on a MERN stack with a React Native companion app for shoppers on the go.',
+        ['MERN', 'React Native', 'MongoDB']),
+      P('08', 'Avimee Herbal', 'shop.avimeeherbal.com', 'https://shop.avimeeherbal.com/', 'E-commerce · Beauty',
+        'Ayurvedic hair & skincare D2C storefront — product catalog, variant selection, cart and checkout — built with a fast, conversion-focused storefront UI on a MERN stack.',
+        ['MERN', 'Next.js', 'MongoDB']),
+    ];
+
+    const tech = ['React', 'Next.js', 'React Native', 'TypeScript', 'Node.js', 'Nest.js', 'Express', 'MongoDB', 'PostgreSQL', 'GraphQL', 'Redux', 'AWS', 'Python', 'AI / LLMs'];
+
+    const skills = [
+      { label: 'LANGUAGES', items: ['TypeScript', 'JavaScript', 'Python', 'C / C++'] },
+      { label: 'FRONTEND', items: ['React.js', 'Next.js', 'React Native', 'Redux', 'Zustand'] },
+      { label: 'BACKEND & DATA', items: ['Node.js', 'Express', 'Nest.js', 'MongoDB', 'PostgreSQL', 'GraphQL'] },
+      { label: 'AI & GEOSPATIAL', items: ['LLM integration', 'Google Earth Engine', 'Predictive modeling'] },
+      { label: 'DEVOPS & TOOLS', items: ['Git', 'AWS', 'Vercel / Netlify', 'Jest + RTL', 'JWT / OAuth'] },
+    ];
+
+    const timeline = [
+      { dates: 'JAN 2026 — PRESENT', place: 'India', role: 'Software Engineer — AI', org: 'DevX AI Labs',
+        points: [
+          'Building AI-powered product features end to end — from LLM-backed workflows to the React / Node interfaces that surface them.',
+          'Owning full-stack delivery across the frontend, APIs and data layer for AI-first applications.',
+        ] },
+      { dates: 'JAN 2024 — DEC 2025', place: 'Surat, India', role: 'Software Engineer', org: 'Webosmotic',
+        points: [
+          'Architected full-stack admin dashboards with React + Redux Toolkit on a modular codebase — cutting new-feature dev time ~35%.',
+          'Designed secure, scalable microservice REST APIs with role-based access control, reducing unauthorized-access incidents ~90%.',
+          'Built an end-to-end 3D model viewer for a cabinet e-commerce platform (React, Fastify, Node, PostgreSQL), boosting engagement ~50%.',
+          'Shipped accessibility-first, internationalized products and added Jest / RTL coverage that cut regression bugs ~55%.',
+        ] },
+      { dates: 'MAY — JUL 2023', place: 'Ahmedabad, India', role: 'Data Scientist — Intern', org: 'SAC, ISRO',
+        points: [
+          'Automated 10+ years of MODIS & GIMMS satellite data with Google Earth Engine, cutting manual workload ~60%.',
+          'Built regression models with first & second-order derivative analysis to assess long-term vegetation trends.',
+          'Visualized spatial-temporal change through interactive maps and time-series plots.',
+        ] },
+      { dates: '2019 — 2024', place: 'NIT Surat', role: 'M.Sc. Mathematics', org: 'CGPA 8.61 / 10',
+        points: [
+          'Five-year integrated Master of Science in Mathematics — strong foundation in modeling, statistics and algorithms.',
+        ] },
+    ];
+
+    return {
+      rootRef: this.rootRef,
+      featured: projects[0],
+      others: projects.slice(1),
+      marqueeLoop: [...tech, ...tech],
+      skills,
+      timeline,
+      year: 2026,
+      showMarquee: this.props.showTechMarquee ?? true,
+      showGrain: this.props.grain ?? true,
+      onImgError: (e) => { e.target.style.display = 'none'; },
+    };
+  }
+}
+</script>
+</body>
+</html>
